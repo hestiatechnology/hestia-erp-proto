@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package hestia.v1.accounting;
+import "google/protobuf/empty.proto";
+
+option go_package = "hestia/api/pb/accounting";
+
+service Tax {
+    rpc GetVatRates (google.protobuf.Empty) returns (VatRates);
+    rpc GetVatExemptions (google.protobuf.Empty) returns (VatExemptions);
+}
+
+message VatRate {
+    string id = 1;
+    uint32 rate = 2;
+    string code = 3;
+}
+
+message VatRates {
+    repeated VatRate vat_rates = 1;
+}
+
+message VatExemption {
+    string id = 1;
+    string code = 2;
+    string description = 3;
+}
+
+message VatExemptions {
+    repeated VatExemption vat_exemptions = 1;
+}
