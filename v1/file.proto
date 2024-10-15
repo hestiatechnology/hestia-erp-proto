@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package hestia.v1.file;
+import "google/protobuf/empty.proto";
+option go_package = "hestia/api/pb/file";
+
+service File {
+    rpc PresignedURL (google.protobuf.Empty) returns (google.protobuf.Empty);
+    rpc GetFile (Request) returns (Response);
+}
+
+enum FileType {
+    FISCAL_DOCUMENT = 0;
+    OTHER = 1;
+}
+
+message Request {
+    string token = 1;
+    string file_id = 2;
+    optional FileType type = 3;
+}
+
+message Response {
+    string url = 1;
+    string file_id = 2;
+    optional FileType type = 3;
+}
