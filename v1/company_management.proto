@@ -21,7 +21,7 @@ message CreateCompanyRequest {
     bool isSoleTrader = 2;
     optional string commercialName = 3;
     string vatId = 4;
-    uint32 ssn = 5;
+    uint64 ssn = 5;
     Location location = 6;
 }
 
