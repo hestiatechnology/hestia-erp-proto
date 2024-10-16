@@ -20,8 +20,8 @@ message CreateCompanyRequest {
     // Indicates whether the company is a sole trader or not 
     bool isSoleTrader = 2;
     optional string commercialName = 3;
-    int32 vatId = 4;
-    int32 ssn = 5;
+    string vatId = 4;
+    uint32 ssn = 5;
     Location location = 6;
 }
 
