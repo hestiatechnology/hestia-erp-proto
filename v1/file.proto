@@ -1,16 +1,19 @@
 syntax = "proto3";
 
 package hestia.v1.file;
-import "google/protobuf/empty.proto";
 option go_package = "hestia/api/pb/file";
 
 service File {
-    rpc UploadFile (FileUpload) returns (google.protobuf.Empty);
+    rpc UploadFile (FileUpload) returns (PresignedURL);
     rpc GetFile (Request) returns (Response);
 }
 
 message FileUpload {
     string file_name = 1;
+}
+
+message PresignedURL {
+    string url = 1;
 }
 
 
