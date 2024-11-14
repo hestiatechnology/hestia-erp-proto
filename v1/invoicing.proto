@@ -6,9 +6,38 @@ import "common.proto";
 option go_package = "hestia/api/pb/invoicing";
 
 service Invoicing {
+    rpc GetClient (hestia.v1.common.Id) returns (Client);
+    rpc GetClients (google.protobuf.Empty) returns (ListClients);
+    rpc SearchClients (SearchClient) returns (ListClients);
     rpc NewInvoice (Invoice) returns (google.protobuf.Empty);
     rpc GetInvoices (google.protobuf.Empty) returns (ListInvoices);
     rpc GetInvoice (hestia.v1.common.Id) returns (Invoice);
+}
+
+message Address {
+    string street = 1;
+    string postal_code = 2;
+    string locality = 3;
+    string country = 4;
+}
+
+message Client {
+    optional string id = 1;
+    string name = 2;
+    string commercial_name = 3;
+    string vat_number = 3;
+    Address address = 4;
+}
+
+message ListClients {
+    repeated Client clients = 1;
+}
+
+message SearchClient {
+    optional string code = 1;
+    optional string vat_number = 2;
+    optional string name = 3;
+    optional string commercial_name = 4;
 }
 
 enum Units {
