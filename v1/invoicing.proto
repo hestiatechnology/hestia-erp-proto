@@ -53,7 +53,12 @@ enum Units {
 message Invoice {
     optional string id = 1;
     string client_id = 2;
-    repeated ProductQuantityPrice products = 3;
+    timestamp date = 3;
+    string hash = 4;
+    string series = 5;
+    string type = 6;
+    int32 number = 7;
+    repeated InvoiceLine products = 8;
 }
 
 message ListInvoices {
@@ -70,7 +75,7 @@ message Product {
     string updated = 7;
 }
 
-message ProductQuantityPrice {
+message InvoiceLine {
     string product_id = 1;
     int32 quantity = 2;
     optional float price = 3;
