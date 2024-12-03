@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package hestia.v1.invoicing;
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 import "common.proto";
 option go_package = "hestia/api/pb/invoicing";
 
@@ -53,7 +54,7 @@ enum Units {
 message Invoice {
     optional string id = 1;
     string client_id = 2;
-    timestamp date = 3;
+    google.protobuf.Timestamp date = 3;
     string hash = 4;
     string series = 5;
     string type = 6;
