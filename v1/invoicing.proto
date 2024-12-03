@@ -51,7 +51,7 @@ enum Units {
     HOUR = 6;
 }
 
-message Invoice {
+message DocumentHeader {
     optional string id = 1;
     string client_id = 2;
     google.protobuf.Timestamp date = 3;
@@ -59,7 +59,11 @@ message Invoice {
     string series = 5;
     string type = 6;
     int32 number = 7;
-    repeated InvoiceLine products = 8;
+}
+
+message Invoice {
+    DocumentHeader header = 1;
+    repeated InvoiceLine lines = 2;
 }
 
 message ListInvoices {
