@@ -72,17 +72,21 @@ message ListInvoices {
 
 message Product {
     optional string id = 1;
-    string name = 2;
-    string description = 3;
-    float price = 4;
-    Units units = 5;
-    string created = 6;
-    string updated = 7;
+    optional string code = 2;
+    string name = 3;
+    optional string description = 4;
+    float price = 5;
+    Units unit = 6;
+    optional string created = 7;
+    optional string updated = 8;
 }
 
 message InvoiceLine {
-    string product_id = 1;
-    int32 quantity = 2;
-    optional float price = 3;
+    Product product = 1;
+    float quantity = 2;
+    float discount = 3;
+    // User must choose between vat_id and vat_exemption_id
+    optional string vat_id = 4;
+    optional string vat_exemption_id = 5;
 }
 
