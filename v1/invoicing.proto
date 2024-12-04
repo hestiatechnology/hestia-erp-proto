@@ -4,6 +4,7 @@ package hestia.v1.invoicing;
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "common.proto";
+import "accounting.proto";
 option go_package = "hestia/api/pb/invoicing";
 
 service Invoicing {
@@ -86,7 +87,8 @@ message InvoiceLine {
     float quantity = 2;
     float discount = 3;
     // User must choose between vat_id and vat_exemption_id
-    optional string vat_id = 4;
-    optional string vat_exemption_id = 5;
+    optional hestia.v1.accounting.VatRate vat_rate = 4;
+    optional hestia.v1.accounting.VatExemption vat_exemption = 5;
+    // User must choose between vat_rate and vat_exemption_rate
 }
 
