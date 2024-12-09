@@ -6,3 +6,8 @@ option go_package = "hestia/api/pb/common";
 message Id {
     string id = 1;
 }
+
+message Pagination {
+    int32 page = 1;
+    int32 limit = 2;
+}
