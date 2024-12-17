@@ -26,9 +26,10 @@ message Address {
 message Client {
     optional string id = 1;
     string name = 2;
-    string commercial_name = 3;
-    string vat_number = 4;
-    Address address = 5;
+    string code = 3;
+    string commercial_name = 4;
+    string vat_number = 5;
+    Address address = 6;
 }
 
 message GetClientsRequest {
