@@ -72,7 +72,8 @@ message Invoice {
 }
 
 message ListInvoices {
-    repeated Invoice invoices = 1;
+    optional hestia.v1.common.Pagination pagination = 1;
+    repeated DocumentHeader invoices = 2;
 }
 
 message Product {
