@@ -58,7 +58,7 @@ enum Units {
 
 message DocumentHeader {
     optional string id = 1;
-    string client_id = 2;
+    Client client = 2;
     google.protobuf.Timestamp date = 3;
     string hash = 4;
     string series = 5;
