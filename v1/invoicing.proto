@@ -17,9 +17,9 @@ service Invoicing {
 }
 
 message Address {
-    string street = 1;
-    string postal_code = 2;
-    string locality = 3;
+    optional string street = 1;
+    optional string postal_code = 2;
+    optional string locality = 3;
     string country = 4;
 }
 
