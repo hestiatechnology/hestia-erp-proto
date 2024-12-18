@@ -29,7 +29,7 @@ message Client {
     string code = 3;
     string commercial_name = 4;
     string vat_number = 5;
-    Address address = 6;
+    optional Address address = 6;
 }
 
 message GetClientsRequest {
@@ -60,11 +60,13 @@ enum Units {
 message DocumentHeader {
     optional string id = 1;
     Client client = 2;
-    google.protobuf.Timestamp date = 3;
-    string hash = 4;
-    string series = 5;
-    string type = 6;
-    int32 number = 7;
+    Address billing_address = 3;
+    optional Address shipping_address = 4;
+    google.protobuf.Timestamp date = 5;
+    string hash = 6;
+    string series = 7;
+    string type = 8;
+    int32 number = 9;
 }
 
 message Invoice {
