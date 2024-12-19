@@ -3,6 +3,7 @@ syntax = "proto3";
 package hestia.v1.invoicing;
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
+import "google/type/money.proto";
 import "common.proto";
 import "accounting.proto";
 option go_package = "hestia/api/pb/invoicing";
@@ -84,7 +85,7 @@ message Product {
     optional string code = 2;
     string name = 3;
     optional string description = 4;
-    float price = 5;
+    google.type.Money price = 5;
     Units unit = 6;
     optional string created = 7;
     optional string updated = 8;
