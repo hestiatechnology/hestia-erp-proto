@@ -96,7 +96,7 @@ message InvoiceLine {
     Product product = 1;
     google.type.Decimal quantity = 2;
     google.type.Decimal discount = 3;
-    optional google.type.Money price = 4;
+    // optional google.type.Money price = 4;
     // User must choose between vat_id and vat_exemption_id
     optional hestia.v1.accounting.VatRate vat_rate = 5;
     optional hestia.v1.accounting.VatExemption vat_exemption = 6;
