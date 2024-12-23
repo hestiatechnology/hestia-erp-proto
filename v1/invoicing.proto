@@ -69,6 +69,14 @@ message DocumentHeader {
     string series = 7;
     string type = 8;
     int32 number = 9;
+    DocumentTotals totals = 10;
+}
+
+message DocumentTotals {
+    google.type.Money net_total = 1;
+    google.type.Money gross_total = 2;
+    google.type.Money vat_total = 3;
+    google.type.Money tax_total = 4;
 }
 
 message Invoice {
