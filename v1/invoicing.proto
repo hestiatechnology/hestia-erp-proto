@@ -29,7 +29,7 @@ message Client {
     optional string id = 1;
     string name = 2;
     string code = 3;
-    string commercial_name = 4;
+    optional string commercial_name = 4;
     string vat_number = 5;
     optional Address address = 6;
 }
