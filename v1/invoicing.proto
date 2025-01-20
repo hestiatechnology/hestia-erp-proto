@@ -35,7 +35,7 @@ message Client {
 }
 
 message GetClientsRequest {
-    optional hestia.v1.common.Pagination pagination = 1;
+    optional hestia.v1.common.TimePagination pagination = 1;
 }
 
 message ListClients {
@@ -85,7 +85,7 @@ message Invoice {
 }
 
 message ListInvoices {
-    optional hestia.v1.common.Pagination pagination = 1;
+    optional hestia.v1.common.TimePagination pagination = 1;
     repeated DocumentHeader invoices = 2;
 }
 
