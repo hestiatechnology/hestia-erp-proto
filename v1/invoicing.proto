@@ -10,7 +10,7 @@ import "accounting.proto";
 option go_package = "hestia/api/pb/invoicing";
 
 service Invoicing {
-    rpc NewInvoice (Invoice) returns (google.protobuf.Empty);
+    rpc NewInvoice (Invoice) returns (hestia.v1.common.Id);
     rpc GetInvoices (google.protobuf.Empty) returns (ListInvoices);
     rpc GetInvoice (hestia.v1.common.Id) returns (Invoice);
 }
