@@ -43,10 +43,7 @@ message ListClients {
 }
 
 message SearchClient {
-    optional string code = 1;
-    optional string vat_number = 2;
-    optional string name = 3;
-    optional string commercial_name = 4;
+    string query = 1;
 }
 
 enum Units {
