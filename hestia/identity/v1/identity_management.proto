@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-package hestia.v1.identity;
+package hestia.identity.v1;
 import "google/protobuf/empty.proto";
-import "company_management.proto";
+import "hestia/company/v1/company.proto";
 option go_package = "hestia/api/pb/idmanagement";
 
-service IdentityManagement {
+service IdentityManagementService {
     rpc Login (LoginRequest) returns (LoginResponse);
     rpc Register (RegisterRequest) returns (google.protobuf.Empty);
     rpc Alive (TokenRequest) returns (google.protobuf.Empty);
@@ -21,7 +21,7 @@ message LoginResponse {
     string token = 1;
     string name = 2;
     string email = 3;
-    repeated hestia.v1.company.Company companies = 4;
+    repeated hestia.company.v1.Company companies = 4;
 }
 
 
