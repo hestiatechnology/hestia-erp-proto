@@ -1,113 +1,114 @@
 syntax = "proto3";
 
 package hestia.invoicing.v1;
+
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
-import "google/type/money.proto";
 import "google/type/decimal.proto";
+import "google/type/money.proto";
+import "hestia/accounting/v1/accounting.proto";
 import "hestia/common/v1/common.proto";
-import "accounting.proto";
+
 option go_package = "hestia/api/pb/invoicing";
 
-service Invoicing {
-    rpc NewInvoice (Invoice) returns (hestia.v1.common.Id);
-    rpc GetInvoices (google.protobuf.Empty) returns (ListInvoices);
-    rpc GetInvoice (hestia.v1.common.Id) returns (Invoice);
+service InvoicingService {
+  rpc NewInvoice(Invoice) returns (hestia.common.v1.Id);
+  rpc GetInvoices(google.protobuf.Empty) returns (ListInvoices);
+  rpc GetInvoice(hestia.common.v1.Id) returns (Invoice);
 }
 
 service ClientService {
-    rpc GetClient (hestia.v1.common.Id) returns (Client);
-    rpc GetClients (GetClientsRequest) returns (ListClients);
-    rpc SearchClients (SearchClient) returns (ListClients);
+  rpc GetClient(hestia.common.v1.Id) returns (Client);
+  rpc GetClients(GetClientsRequest) returns (ListClients);
+  rpc SearchClients(SearchClient) returns (ListClients);
 }
 
 message Address {
-    optional string street = 1;
-    optional string postal_code = 2;
-    optional string locality = 3;
-    string country = 4;
+  optional string street = 1;
+  optional string postal_code = 2;
+  optional string locality = 3;
+  string country = 4;
 }
 
 message Client {
-    optional string id = 1;
-    string name = 2;
-    string code = 3;
-    optional string commercial_name = 4;
-    string vat_number = 5;
-    optional Address address = 6;
+  optional string id = 1;
+  string name = 2;
+  string code = 3;
+  optional string commercial_name = 4;
+  string vat_number = 5;
+  optional Address address = 6;
 }
 
 message GetClientsRequest {
-    optional hestia.v1.common.TimePagination pagination = 1;
+  optional hestia.common.v1.TimePagination pagination = 1;
 }
 
 message ListClients {
-    repeated Client clients = 1;
+  repeated Client clients = 1;
 }
 
 message SearchClient {
-    string query = 1;
+  string query = 1;
 }
 
 enum Units {
-    UNIT = 0;
-    KG = 1;
-    L = 2;
-    M = 3;
-    M2 = 4;
-    M3 = 5;
-    HOUR = 6;
+  UNIT = 0;
+  KG = 1;
+  L = 2;
+  M = 3;
+  M2 = 4;
+  M3 = 5;
+  HOUR = 6;
 }
 
 message DocumentHeader {
-    optional string id = 1;
-    Client client = 2;
-    Address billing_address = 3;
-    optional Address shipping_address = 4;
-    google.protobuf.Timestamp date = 5;
-    string hash = 6;
-    string series = 7;
-    string type = 8;
-    int32 number = 9;
-    DocumentTotals totals = 10;
+  optional string id = 1;
+  Client client = 2;
+  Address billing_address = 3;
+  optional Address shipping_address = 4;
+  google.protobuf.Timestamp date = 5;
+  string hash = 6;
+  string series = 7;
+  string type = 8;
+  int32 number = 9;
+  DocumentTotals totals = 10;
 }
 
 message DocumentTotals {
-    google.type.Money net_total = 1;
-    google.type.Money gross_total = 2;
-    google.type.Money vat_total = 3;
-    google.type.Money tax_total = 4;
+  google.type.Money net_total = 1;
+  google.type.Money gross_total = 2;
+  google.type.Money vat_total = 3;
+  google.type.Money tax_total = 4;
 }
 
 message Invoice {
-    DocumentHeader header = 1;
-    repeated InvoiceLine lines = 2;
+  DocumentHeader header = 1;
+  repeated InvoiceLine lines = 2;
 }
 
 message ListInvoices {
-    optional hestia.v1.common.TimePagination pagination = 1;
-    repeated DocumentHeader invoices = 2;
+  optional hestia.common.v1.TimePagination pagination = 1;
+  repeated DocumentHeader invoices = 2;
 }
 
 message Product {
-    optional string id = 1;
-    optional string code = 2;
-    string name = 3;
-    optional string description = 4;
-    google.type.Money price = 5;
-    Units unit = 6;
-    optional string created = 7;
-    optional string updated = 8;
+  optional string id = 1;
+  optional string code = 2;
+  string name = 3;
+  optional string description = 4;
+  google.type.Money price = 5;
+  Units unit = 6;
+  optional string created = 7;
+  optional string updated = 8;
 }
 
 message InvoiceLine {
-    Product product = 1;
-    google.type.Decimal quantity = 2;
-    google.type.Decimal discount = 3;
-    // User must choose between vat_rate and vat_exemption_rate
-    optional hestia.accounting.v1.VatRate vat_rate = 4;
-    optional hestia.accounting.v1.VatExemption vat_exemption = 5;
-    google.type.Money net_total = 6;
-    google.type.Money gross_total = 7;
+  Product product = 1;
+  google.type.Decimal quantity = 2;
+  google.type.Decimal discount = 3;
+  // User must choose between vat_rate and vat_exemption_rate
+  optional hestia.accounting.v1.VatRate vat_rate = 4;
+  optional hestia.accounting.v1.VatExemption vat_exemption = 5;
+  google.type.Money net_total = 6;
+  google.type.Money gross_total = 7;
 }
-

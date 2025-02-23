@@ -1,32 +1,45 @@
-syntax = "proto3";
+edition = "2023";
 
 package hestia.accounting.v1;
+
 import "google/protobuf/empty.proto";
 
 option go_package = "hestia/api/pb/accounting";
 
-service Tax {
-    rpc GetVatRates (google.protobuf.Empty) returns (VatRates);
-    rpc GetVatExemptions (google.protobuf.Empty) returns (VatExemptions);
+service TaxService {
+  rpc GetVatRates(GetVatRatesRequest) returns (GetVatRatesResponse);
+  rpc GetVatExemptions(google.protobuf.Empty) returns (GetVatExemptionsResponse);
+}
+
+message GetVatRatesRequest {
+  string country = 1 [default = "PT"];
+}
+
+enum VatType {
+  VAT_TYPE_UNSPECIFIED = 0;
+  VAT_TYPE_STANDARD = 1;
+  VAT_TYPE_INTERMEDIATE = 2;
+  VAT_TYPE_REDUCED = 3;
+  VAT_TYPE_EXEMPT = 4;
 }
 
 message VatRate {
-    string id = 1;
-    uint32 rate = 2;
-    string code = 3;
-    string country = 4;
+  string id = 1;
+  uint32 rate = 2;
+  string type = 3;
+  string country = 4;
 }
 
-message VatRates {
-    repeated VatRate vat_rates = 1;
+message GetVatRatesResponse {
+  repeated VatRate vat_rates = 1;
 }
 
 message VatExemption {
-    string id = 1;
-    string code = 2;
-    string description = 3;
+  string id = 1;
+  string code = 2;
+  string description = 3;
 }
 
-message VatExemptions {
-    repeated VatExemption vat_exemptions = 1;
+message GetVatExemptionsResponse {
+  repeated VatExemption vat_exemptions = 1;
 }

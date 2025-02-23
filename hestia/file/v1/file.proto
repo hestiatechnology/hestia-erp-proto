@@ -1,35 +1,35 @@
 syntax = "proto3";
 
 package hestia.file.v1;
+
 option go_package = "hestia/api/pb/file";
 
-service File {
-    rpc UploadFile (FileUpload) returns (PresignedURL);
-    rpc GetFile (Request) returns (Response);
+service FileService {
+  rpc UploadFile(FileUpload) returns (PresignedURL);
+  rpc GetFile(Request) returns (Response);
 }
 
 message FileUpload {
-    string file_name = 1;
+  string file_name = 1;
 }
 
 message PresignedURL {
-    string url = 1;
+  string url = 1;
 }
 
-
 enum FileType {
-    FISCAL_DOCUMENT = 0;
-    OTHER = 1;
+  FISCAL_DOCUMENT = 0;
+  OTHER = 1;
 }
 
 message Request {
-    string token = 1;
-    string file_id = 2;
-    optional FileType type = 3;
+  string token = 1;
+  string file_id = 2;
+  optional FileType type = 3;
 }
 
 message Response {
-    string url = 1;
-    string file_id = 2;
-    optional FileType type = 3;
+  string url = 1;
+  string file_id = 2;
+  optional FileType type = 3;
 }
