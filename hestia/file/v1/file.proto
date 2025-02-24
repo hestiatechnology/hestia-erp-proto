@@ -1,35 +1,38 @@
-syntax = "proto3";
+edition = "2023";
 
 package hestia.file.v1;
 
-option go_package = "hestia/api/pb/file";
+option go_package = "hestia/api/gen/file;file";
 
 service FileService {
-  rpc UploadFile(FileUpload) returns (PresignedURL);
-  rpc GetFile(Request) returns (Response);
+  rpc UploadFile(UploadFileRequest) returns (UploadFileResponse);
+  //rpc GetFile(Request) returns (Response);
 }
 
-message FileUpload {
+message UploadFileRequest {
   string file_name = 1;
 }
 
-message PresignedURL {
+message UploadFileResponse {
   string url = 1;
 }
 
 enum FileType {
-  FISCAL_DOCUMENT = 0;
-  OTHER = 1;
+  FILE_TYPE_UNSPECIFIED = 0;
+  FILE_TYPE_FISCAL_DOCUMENT = 1;
+  FILE_TYPE_OTHER = 2;
 }
 
-message Request {
-  string token = 1;
-  string file_id = 2;
-  optional FileType type = 3;
-}
+/*
+         message Request {
+           string token = 1;
+           string file_id = 2;
+           FileType type = 3 [features.field_presence = EXPLICIT];
+         }
 
-message Response {
-  string url = 1;
-  string file_id = 2;
-  optional FileType type = 3;
-}
+         message Response {
+           string url = 1;
+           string file_id = 2;
+           FileType type = 3 [features.field_presence = EXPLICIT];
+         }
+*/

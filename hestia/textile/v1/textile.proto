@@ -1,16 +1,26 @@
-syntax = "proto3";
+edition = "2023";
 
 package hestia.textile.v1;
 
-option go_package = "hestia/api/pb/textile";
+option go_package = "hestia/api/gen/textile;textile";
 
 service TextileService {
-  rpc CreateTechnicalModel(TechnicalModel) returns (TechnicalModel);
+  rpc CreateTechnicalModel(CreateTechnicalModelRequest) returns (CreateTechnicalModelResponse);
+}
+
+message CreateTechnicalModelRequest {
+  string name = 1;
+  string description = 2;
+  string type = 3;
+}
+
+message CreateTechnicalModelResponse {
+  TechnicalModel model = 1;
 }
 
 message TechnicalModel {
   // ID is given after the model is created
-  optional string id = 1;
+  string id = 1 [features.field_presence = EXPLICIT];
   string name = 2;
   string description = 3;
   string type = 4;

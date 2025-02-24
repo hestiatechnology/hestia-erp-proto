@@ -1,10 +1,10 @@
-syntax = "proto3";
+edition = "2023";
 
 package hestia.common.v1;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "hestia/api/pb/common";
+option go_package = "hestia/api/gen/common;common";
 
 message Id {
   string id = 1;
@@ -12,6 +12,6 @@ message Id {
 
 message TimePagination {
   // If not set, it will be the current time
-  optional google.protobuf.Timestamp time = 1;
+  google.protobuf.Timestamp time = 1 [features.field_presence = EXPLICIT];
   int32 limit = 2;
 }

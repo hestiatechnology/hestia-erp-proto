@@ -2,13 +2,11 @@ edition = "2023";
 
 package hestia.accounting.v1;
 
-import "google/protobuf/empty.proto";
-
-option go_package = "hestia/api/pb/accounting";
+option go_package = "hestia/api/gen/accounting;accounting";
 
 service TaxService {
   rpc GetVatRates(GetVatRatesRequest) returns (GetVatRatesResponse);
-  rpc GetVatExemptions(google.protobuf.Empty) returns (GetVatExemptionsResponse);
+  rpc GetVatExemptions(GetVatExemptionsRequest) returns (GetVatExemptionsResponse);
 }
 
 message GetVatRatesRequest {
@@ -32,6 +30,10 @@ message VatRate {
 
 message GetVatRatesResponse {
   repeated VatRate vat_rates = 1;
+}
+
+message GetVatExemptionsRequest {
+  string country = 1 [default = "PT"];
 }
 
 message VatExemption {

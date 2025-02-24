@@ -1,71 +1,49 @@
-syntax = "proto3";
+edition = "2023";
 
 package hestia.invoicing.v1;
 
-import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "google/type/decimal.proto";
 import "google/type/money.proto";
 import "hestia/accounting/v1/accounting.proto";
 import "hestia/common/v1/common.proto";
 
-option go_package = "hestia/api/pb/invoicing";
+option go_package = "hestia/api/gen/invoicing;invoicing";
 
 service InvoicingService {
-  rpc NewInvoice(Invoice) returns (hestia.common.v1.Id);
-  rpc GetInvoices(google.protobuf.Empty) returns (ListInvoices);
-  rpc GetInvoice(hestia.common.v1.Id) returns (Invoice);
+  rpc NewInvoice(NewInvoiceRequest) returns (NewInvoiceResponse);
+  rpc GetInvoices(GetInvoicesRequest) returns (GetInvoicesResponse);
+  rpc GetInvoice(GetInvoiceRequest) returns (GetInvoiceResponse);
 }
 
 service ClientService {
-  rpc GetClient(hestia.common.v1.Id) returns (Client);
-  rpc GetClients(GetClientsRequest) returns (ListClients);
-  rpc SearchClients(SearchClient) returns (ListClients);
+  rpc GetClient(GetClientRequest) returns (GetClientResponse);
+  rpc GetClients(GetClientsRequest) returns (GetClientsResponse);
 }
 
 message Address {
-  optional string street = 1;
-  optional string postal_code = 2;
-  optional string locality = 3;
+  string street = 1 [features.field_presence = EXPLICIT];
+  string postal_code = 2 [features.field_presence = EXPLICIT];
+  string locality = 3 [features.field_presence = EXPLICIT];
   string country = 4;
 }
 
-message Client {
-  optional string id = 1;
-  string name = 2;
-  string code = 3;
-  optional string commercial_name = 4;
-  string vat_number = 5;
-  optional Address address = 6;
-}
-
-message GetClientsRequest {
-  optional hestia.common.v1.TimePagination pagination = 1;
-}
-
-message ListClients {
-  repeated Client clients = 1;
-}
-
-message SearchClient {
-  string query = 1;
-}
-
 enum Units {
-  UNIT = 0;
-  KG = 1;
-  L = 2;
-  M = 3;
-  M2 = 4;
-  M3 = 5;
-  HOUR = 6;
+  UNITS_UNSPECIFIED = 0;
+  UNITS_UNIT = 1;
+  UNITS_KG = 2;
+  UNITS_L = 3;
+  UNITS_M = 4;
+  UNITS_M2 = 5;
+  UNITS_M3 = 6;
+  UNITS_HOUR = 7;
 }
 
 message DocumentHeader {
-  optional string id = 1;
+  string id = 1 [features.field_presence = EXPLICIT];
   Client client = 2;
   Address billing_address = 3;
-  optional Address shipping_address = 4;
+  Address shipping_address = 4 [features.field_presence = EXPLICIT];
   google.protobuf.Timestamp date = 5;
   string hash = 6;
   string series = 7;
@@ -81,25 +59,45 @@ message DocumentTotals {
   google.type.Money tax_total = 4;
 }
 
+message NewInvoiceRequest {
+  Invoice invoice = 1;
+}
+
+message NewInvoiceResponse {
+  hestia.common.v1.Id id = 1;
+}
+
 message Invoice {
   DocumentHeader header = 1;
   repeated InvoiceLine lines = 2;
 }
 
-message ListInvoices {
-  optional hestia.common.v1.TimePagination pagination = 1;
+message GetInvoiceRequest {
+  hestia.common.v1.Id id = 1;
+}
+
+message GetInvoiceResponse {
+  Invoice invoice = 1;
+}
+
+message GetInvoicesRequest {
+  hestia.common.v1.TimePagination pagination = 1;
+}
+
+message GetInvoicesResponse {
+  hestia.common.v1.TimePagination pagination = 1 [features.field_presence = EXPLICIT];
   repeated DocumentHeader invoices = 2;
 }
 
 message Product {
-  optional string id = 1;
-  optional string code = 2;
+  string id = 1 [features.field_presence = EXPLICIT];
+  string code = 2 [features.field_presence = EXPLICIT];
   string name = 3;
-  optional string description = 4;
+  string description = 4 [features.field_presence = EXPLICIT];
   google.type.Money price = 5;
   Units unit = 6;
-  optional string created = 7;
-  optional string updated = 8;
+  string created = 7 [features.field_presence = EXPLICIT];
+  string updated = 8 [features.field_presence = EXPLICIT];
 }
 
 message InvoiceLine {
@@ -107,8 +105,36 @@ message InvoiceLine {
   google.type.Decimal quantity = 2;
   google.type.Decimal discount = 3;
   // User must choose between vat_rate and vat_exemption_rate
-  optional hestia.accounting.v1.VatRate vat_rate = 4;
-  optional hestia.accounting.v1.VatExemption vat_exemption = 5;
+  hestia.accounting.v1.VatRate vat_rate = 4 [features.field_presence = EXPLICIT];
+  hestia.accounting.v1.VatExemption vat_exemption = 5 [features.field_presence = EXPLICIT];
   google.type.Money net_total = 6;
   google.type.Money gross_total = 7;
+}
+
+message Client {
+  string id = 1 [features.field_presence = EXPLICIT];
+  string name = 2;
+  string code = 3;
+  string commercial_name = 4 [features.field_presence = EXPLICIT];
+  string vat_number = 5;
+  Address address = 6 [features.field_presence = EXPLICIT];
+}
+
+message GetClientRequest {
+  oneof client {
+    hestia.common.v1.Id id = 1;
+    string code = 2;
+  }
+}
+
+message GetClientResponse {
+  Client client = 1;
+}
+
+message GetClientsRequest {
+  hestia.common.v1.TimePagination pagination = 1 [features.field_presence = EXPLICIT];
+}
+
+message GetClientsResponse {
+  repeated Client clients = 1;
 }

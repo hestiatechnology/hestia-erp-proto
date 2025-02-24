@@ -1,17 +1,16 @@
-syntax = "proto3";
+edition = "2023";
 
 package hestia.identity.v1;
 
-import "google/protobuf/empty.proto";
 import "hestia/company/v1/company.proto";
 
-option go_package = "hestia/api/pb/idmanagement";
+option go_package = "hestia/api/gen/idmanagement;idmanagement";
 
 service IdentityManagementService {
   rpc Login(LoginRequest) returns (LoginResponse);
-  rpc Register(RegisterRequest) returns (google.protobuf.Empty);
-  rpc Alive(TokenRequest) returns (google.protobuf.Empty);
-  rpc Logout(TokenRequest) returns (google.protobuf.Empty);
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc Alive(AliveRequest) returns (AliveResponse);
+  rpc Logout(LogoutRequest) returns (LogoutResponse);
 }
 
 message LoginRequest {
@@ -34,6 +33,16 @@ message RegisterRequest {
   string timezone = 4;
 }
 
-message TokenRequest {
+message RegisterResponse {}
+
+message AliveRequest {
   string token = 1;
 }
+
+message AliveResponse {}
+
+message LogoutRequest {
+  string token = 1;
+}
+
+message LogoutResponse {}
