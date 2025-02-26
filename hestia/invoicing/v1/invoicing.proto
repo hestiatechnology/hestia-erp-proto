@@ -19,6 +19,7 @@ service InvoicingService {
 service ClientService {
   rpc GetClient(GetClientRequest) returns (GetClientResponse);
   rpc GetClients(GetClientsRequest) returns (GetClientsResponse);
+  rpc SearchClients(SearchClientsRequest) returns (SearchClientsResponse);
 }
 
 message Address {
@@ -124,6 +125,7 @@ message GetClientRequest {
   oneof client {
     hestia.common.v1.Id id = 1;
     string code = 2;
+    string vat_id = 3;
   }
 }
 
@@ -136,5 +138,13 @@ message GetClientsRequest {
 }
 
 message GetClientsResponse {
+  repeated Client clients = 1;
+}
+
+message SearchClientsRequest {
+  string query = 1;
+}
+
+message SearchClientsResponse {
   repeated Client clients = 1;
 }
