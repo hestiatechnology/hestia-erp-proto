@@ -97,8 +97,9 @@ message Product {
   string description = 4 [features.field_presence = EXPLICIT];
   google.type.Money price = 5;
   Units unit = 6;
-  string created = 7 [features.field_presence = EXPLICIT];
-  string updated = 8 [features.field_presence = EXPLICIT];
+  int64 stock = 7;
+  string created = 8 [features.field_presence = EXPLICIT];
+  string updated = 9 [features.field_presence = EXPLICIT];
 }
 
 message InvoiceLine {
